@@ -4,8 +4,8 @@ import os
 import re
 from difflib import SequenceMatcher
 
-from autojump_utils import is_python3
-from autojump_utils import last
+from bin.autojump_utils import is_python3
+from bin.autojump_utils import last
 
 
 if is_python3():  # pragma: no cover

@@ -98,6 +98,7 @@ except NameError:
     from sets import Set as set
 
 try:
+    # noinspection PyUnresolvedReferences
     basestring
 except NameError:
     basestring = str
