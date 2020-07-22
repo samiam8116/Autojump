@@ -36,34 +36,34 @@ else:
     from itertools import imap
 
 # Vendorized argparse for Python 2.6 support
-from autojump_argparse import ArgumentParser
+from bin.autojump_argparse import ArgumentParser
 
 # autojump is not a standard python package but rather installed as a mixed
 # shell + Python app with no outside dependencies (except Python). As a
 # consequence we use relative imports and depend on file prefixes to prevent
 # module conflicts.
-from autojump_data import dictify
-from autojump_data import entriefy
-from autojump_data import Entry
-from autojump_data import load
-from autojump_data import save
-from autojump_match import match_anywhere
-from autojump_match import match_consecutive
-from autojump_match import match_fuzzy
-from autojump_utils import first
-from autojump_utils import get_pwd
-from autojump_utils import get_tab_entry_info
-from autojump_utils import has_uppercase
-from autojump_utils import is_autojump_sourced
-from autojump_utils import is_osx
-from autojump_utils import is_windows
-from autojump_utils import last
-from autojump_utils import print_entry
-from autojump_utils import print_local
-from autojump_utils import print_tab_menu
-from autojump_utils import sanitize
-from autojump_utils import take
-from autojump_utils import unico
+from bin.autojump_data import dictify
+from bin.autojump_data import entriefy
+from bin.autojump_data import Entry
+from bin.autojump_data import load
+from bin.autojump_data import save
+from bin.autojump_match import match_anywhere
+from bin.autojump_match import match_consecutive
+from bin.autojump_match import match_fuzzy
+from bin.autojump_utils import first
+from bin.autojump_utils import get_pwd
+from bin.autojump_utils import get_tab_entry_info
+from bin.autojump_utils import has_uppercase
+from bin.autojump_utils import is_autojump_sourced
+from bin.autojump_utils import is_osx
+from bin.autojump_utils import is_windows
+from bin.autojump_utils import last
+from bin.autojump_utils import print_entry
+from bin.autojump_utils import print_local
+from bin.autojump_utils import print_tab_menu
+from bin.autojump_utils import sanitize
+from bin.autojump_utils import take
+from bin.autojump_utils import unico
 
 VERSION = '22.5.3'
 FUZZY_MATCH_THRESHOLD = 0.6

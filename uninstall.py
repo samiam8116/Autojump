@@ -72,6 +72,7 @@ def remove_custom_installation(args, dryrun=False):
     rm(os.path.join(bin_dir, 'autojump_data.py'), dryrun)
     rm(os.path.join(bin_dir, 'autojump_utils.py'), dryrun)
     rm(os.path.join(bin_dir, 'autojump_argparse.py'), dryrun)
+    rm(os.path.join(bin_dir, 'autojump_match.py'), dryrun)
     if platform.system() == 'Windows':
         if os.path.exists(args.clinkdir):
             rm(os.path.join(args.clinkdir, 'autojump.lua'), dryrun)
@@ -86,9 +87,11 @@ def remove_custom_installation(args, dryrun=False):
         rm(os.path.join(share_dir, 'autojump.fish'), dryrun)
         rm(os.path.join(share_dir, 'autojump.tcsh'), dryrun)
         rm(os.path.join(share_dir, 'autojump.zsh'), dryrun)
+        rm(os.path.join(etc_dir, 'profile.d'), dryrun)
         rm(os.path.join(zshshare_dir, '_j'), dryrun)
     rmdir(share_dir, dryrun)
     rm(os.path.join(doc_dir, 'autojump.1'), dryrun)
+    rmdir(doc_dir, dryrun)
 
     if is_empty_dir(args.destdir):
         rmdir(args.destdir, dryrun)
