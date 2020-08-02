@@ -82,7 +82,7 @@ def get_pwd():
 def has_uppercase(string):
     if is_python3():
         return any(ch.isupper() for ch in string)
-    return any(unicodedata.category(c) == 'Lu' for c in unicode(string))
+    return any(unicodedata.category(c) == 'Lu' for c in str(string))
 
 
 def in_bash():
@@ -206,6 +206,6 @@ def take(n, iterable):
 
 def unico(string):
     """Converts into Unicode string."""
-    if is_python2() and not isinstance(string, unicode):
-        return unicode(string, encoding='utf-8', errors='replace')
+    if is_python2() and not isinstance(string, str):
+        return str(string, encoding='utf-8', errors='replace')
     return string
