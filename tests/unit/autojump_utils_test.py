@@ -33,7 +33,9 @@ def u(string):
     """
     if is_python3():
         return string
-    return unicode(string, encoding='utf-8', errors='strict')
+    return str(string, encoding='utf-8', errors='strict')
+    # to fix lint error change 'unicode' to 'str'
+    # because Python 3 renamed the unicode type to str
 
 
 # strings
