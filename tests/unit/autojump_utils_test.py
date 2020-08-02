@@ -6,7 +6,6 @@ import sys
 import mock
 import pytest
 
-sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
 import autojump_utils
 from autojump_utils import encode_local
 from autojump_utils import first
@@ -20,6 +19,8 @@ from autojump_utils import second
 from autojump_utils import surround_quotes
 from autojump_utils import take
 from autojump_utils import unico
+
+sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
 
 
 if is_python3():
