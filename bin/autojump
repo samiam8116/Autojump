@@ -36,34 +36,34 @@ else:
     from itertools import imap
 
 # Vendorized argparse for Python 2.6 support
-from bin.autojump_argparse import ArgumentParser
+from autojump_argparse import ArgumentParser
 
 # autojump is not a standard python package but rather installed as a mixed
 # shell + Python app with no outside dependencies (except Python). As a
 # consequence we use relative imports and depend on file prefixes to prevent
 # module conflicts.
-from bin.autojump_data import dictify
-from bin.autojump_data import entriefy
-from bin.autojump_data import Entry
-from bin.autojump_data import load
-from bin.autojump_data import save
-from bin.autojump_match import match_anywhere
-from bin.autojump_match import match_consecutive
-from bin.autojump_match import match_fuzzy
-from bin.autojump_utils import first
-from bin.autojump_utils import get_pwd
-from bin.autojump_utils import get_tab_entry_info
-from bin.autojump_utils import has_uppercase
-from bin.autojump_utils import is_autojump_sourced
-from bin.autojump_utils import is_osx
-from bin.autojump_utils import is_windows
-from bin.autojump_utils import last
-from bin.autojump_utils import print_entry
-from bin.autojump_utils import print_local
-from bin.autojump_utils import print_tab_menu
-from bin.autojump_utils import sanitize
-from bin.autojump_utils import take
-from bin.autojump_utils import unico
+from autojump_data import dictify
+from autojump_data import entriefy
+from autojump_data import Entry
+from autojump_data import load
+from autojump_data import save
+from autojump_match import match_anywhere
+from autojump_match import match_consecutive
+from autojump_match import match_fuzzy
+from autojump_utils import first
+from autojump_utils import get_pwd
+from autojump_utils import get_tab_entry_info
+from autojump_utils import has_uppercase
+from autojump_utils import is_autojump_sourced
+from autojump_utils import is_osx
+from autojump_utils import is_windows
+from autojump_utils import last
+from autojump_utils import print_entry
+from autojump_utils import print_local
+from autojump_utils import print_tab_menu
+from autojump_utils import sanitize
+from autojump_utils import take
+from autojump_utils import unico
 
 VERSION = '22.5.3'
 FUZZY_MATCH_THRESHOLD = 0.6
@@ -131,6 +131,10 @@ def parse_arguments():
     parser.add_argument(
         '-v', '--version', action='version', version='%(prog)s v' +
         VERSION, help='show version information',
+    )
+    parser.add_argument(
+        '--initial',
+        help='Add Shortcut',
     )
 
     return parser.parse_args()
@@ -267,6 +271,13 @@ def print_stats(data, data_path):
     print('\ndata:\t %s' % data_path)
 
 
+def add_shortcut(data, path):
+    src = data
+    dst = os.path.expanduser('~') + '/' + path
+    os.symlink(src, dst)
+    return dst
+
+
 def main(args):  # noqa
     if not is_autojump_sourced() and not is_windows():
         print("Please source the correct autojump file in your shell's")
@@ -280,10 +291,16 @@ def main(args):  # noqa
     if args.add:
         save(config, first(add_path(load(config), args.add)))
     elif args.complete:
+        old_data = load(config)
+        new_data = dictify(purge_missing_paths(entriefy(old_data)))
+        save(config, new_data)
         handle_tab_completion(
             needle=first(chain(sanitize(args.directory), [''])),
             entries=entriefy(load(config)),
         )
+    elif args.initial:
+        link = add_shortcut(get_pwd(), args.initial)
+        save(config, first(add_path(load(config), link)))
     elif args.decrease:
         data, entry = decrease_path(load(config), get_pwd(), args.decrease)
         save(config, data)

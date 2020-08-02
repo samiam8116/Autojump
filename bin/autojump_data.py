@@ -10,11 +10,11 @@ from collections import namedtuple
 from tempfile import NamedTemporaryFile
 from time import time
 
-from bin.autojump_utils import create_dir
-from bin.autojump_utils import is_osx
-from bin.autojump_utils import is_python3
-from bin.autojump_utils import move_file
-from bin.autojump_utils import unico
+from autojump_utils import create_dir
+from autojump_utils import is_osx
+from autojump_utils import is_python3
+from autojump_utils import move_file
+from autojump_utils import unico
 
 
 if sys.version_info[0] == 3:
