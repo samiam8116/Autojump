@@ -11,6 +11,8 @@ import sys
 import unicodedata
 from itertools import islice
 
+from numpy import unicode
+
 if sys.version_info[0] == 3:
     imap = map
     os.getcwdu = os.getcwd
