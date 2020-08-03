@@ -6,7 +6,6 @@ import sys
 import mock
 import pytest
 
-sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
 import autojump_utils
 from autojump_utils import encode_local
 from autojump_utils import first
@@ -21,6 +20,8 @@ from autojump_utils import surround_quotes
 from autojump_utils import take
 from autojump_utils import unico
 
+sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
+
 
 if is_python3():
     os.getcwdu = os.getcwd
@@ -33,7 +34,9 @@ def u(string):
     """
     if is_python3():
         return string
-    return unicode(string, encoding='utf-8', errors='strict')
+    return str(string, encoding='utf-8', errors='strict')
+    # to fix lint error change 'unicode' to 'str'
+    # because Python 3 renamed the unicode type to str
 
 
 # strings

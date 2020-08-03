@@ -5,14 +5,14 @@ import sys
 
 import pytest
 
-sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
 from autojump_data import Entry
 from autojump_match import match_anywhere
 from autojump_match import match_consecutive
 
+sys.path.append(os.path.join(os.getcwd(), 'bin'))  # noqa
+
 
 class TestMatchAnywhere(object):
-
     entry1 = Entry('/foo/bar/baz', 10)
     entry2 = Entry('/baz/foo/bar', 10)
     entry3 = Entry('/foo/baz', 10)
@@ -41,7 +41,7 @@ class TestMatchAnywhere(object):
 
     def test_consecutive(self, haystack):
         assert list(match_anywhere(['foo', 'bar'], haystack)) \
-            == [self.entry1, self.entry2]
+               == [self.entry1, self.entry2]
         assert list(match_anywhere(['bar', 'foo'], haystack)) == []
 
     def test_skip(self, haystack):
@@ -50,16 +50,16 @@ class TestMatchAnywhere(object):
 
     def test_ignore_case(self, haystack):
         assert list(match_anywhere(['bAz', 'bAR'], haystack, ignore_case=True)) \
-            == [self.entry2]
+               == [self.entry2]
 
     def test_backslashes_for_windows_paths(self, windows_haystack):
         # https://github.com/wting/autojump/issues/281
         assert list(match_anywhere(['foo', 'baz'], windows_haystack)) \
-            == [self.win_entry1]
+               == [self.win_entry1]
         assert list(match_anywhere(['program', 'gimp'], windows_haystack, True)) \
-            == [self.win_entry2]
+               == [self.win_entry2]
         assert list(match_anywhere(['win', '32'], windows_haystack, True)) \
-            == [self.win_entry3]
+               == [self.win_entry3]
 
     def test_wildcard_in_needle(self, haystack):
         # https://github.com/wting/autojump/issues/402
@@ -68,7 +68,6 @@ class TestMatchAnywhere(object):
 
 
 class TestMatchConsecutive(object):
-
     entry1 = Entry('/foo/bar/baz', 10)
     entry2 = Entry('/baz/foo/bar', 10)
     entry3 = Entry('/foo/baz', 10)
@@ -105,7 +104,7 @@ class TestMatchConsecutive(object):
 
     def test_ignore_case(self, haystack):
         assert list(match_consecutive(['FoO', 'bAR'], haystack, ignore_case=True)) \
-            == [self.entry2]
+               == [self.entry2]
 
     def test_windows_ignore_case(self, windows_haystack):
         assert list(match_consecutive(['gimp'], windows_haystack, True)) == [self.win_entry2]
@@ -113,17 +112,17 @@ class TestMatchConsecutive(object):
     @pytest.mark.xfail(reason='https://github.com/wting/autojump/issues/418')
     def test_backslashes_for_windows_paths(self, windows_haystack):
         assert list(match_consecutive(['program', 'gimp'], windows_haystack, True)) \
-            == [self.win_entry2]
+               == [self.win_entry2]
 
     @pytest.mark.xfail(reason='https://github.com/wting/autojump/issues/418')
     def test_foo_bar_baz(self, windows_haystack):
         assert list(match_consecutive(['bar', 'baz'], windows_haystack, ignore_case=True)) \
-            == [self.win_entry1]
+               == [self.win_entry1]
 
     @pytest.mark.xfail(reason='https://github.com/wting/autojump/issues/402')
     def test_thing(self, windows_haystack):
         assert list(match_consecutive(['win', '32'], windows_haystack, True)) \
-            == [self.win_entry3]
+               == [self.win_entry3]
 
     @pytest.mark.xfail(reason='https://github.com/wting/autojump/issues/402')
     def test_wildcard_in_needle(self, haystack):
