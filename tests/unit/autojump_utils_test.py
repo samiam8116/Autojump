@@ -146,4 +146,4 @@ def test_get_none():
 
 
 def test_tab_delete():
-    assert ('foo') == ('bar')
+    assert 'foo' == 'bar'
