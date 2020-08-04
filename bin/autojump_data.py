@@ -43,7 +43,7 @@ def dictify(entries):
 
 def entriefy(data):
     """Converts a dictionary into an iterator of entries."""
-    convert = lambda tup: Entry(*tup)
+    def convert(tup): Entry(*tup)
     if is_python3():
         return map(convert, data.items())
     return imap(convert, data.iteritems())

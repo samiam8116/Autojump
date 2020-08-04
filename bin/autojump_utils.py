@@ -11,7 +11,7 @@ import sys
 import unicodedata
 from itertools import islice
 
-from numpy import unicode
+
 
 if sys.version_info[0] == 3:
     imap = map
@@ -173,7 +173,7 @@ def print_tab_menu(needle, tab_entries, separator):
 
 def sanitize(directories):
     # edge case to allow '/' as a valid path
-    clean = lambda x: unico(x) if x == os.sep else unico(x).rstrip(os.sep)
+    def clean(x): unico(x) if x == os.sep else unico(x).rstrip(os.sep)
     return list(imap(clean, directories))
 
 
