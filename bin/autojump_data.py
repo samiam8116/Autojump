@@ -65,12 +65,12 @@ def load(config):
         return {}
 
     # example: u'10.0\t/home/user\n' -> ['10.0', u'/home/user']
-    parse = lambda line: line.strip().split('\t')
+    def parse(line): return line.strip().split('\t')
 
-    correct_length = lambda x: len(x) == 2
+    def correct_length(x): return len(x) == 2
 
     # example: ['10.0', u'/home/user'] -> (u'/home/user', 10.0)
-    tupleize = lambda x: (x[1], float(x[0]))
+    def tupleize(x): return x[1], float(x[0])
 
     try:
         with open(
