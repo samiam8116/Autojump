@@ -7,7 +7,6 @@ ifilter = filter
 
 def purge_missing_paths(entries):
     """Remove non-existent paths from a list of entries."""
-    # exists = lambda entry: os.path.exists(entry.path)
     def f(entry):
         exists = os.path.exists(entry.path)
         return exists
