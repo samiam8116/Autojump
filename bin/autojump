@@ -95,12 +95,12 @@ def set_defaults():
 
 def parse_arguments():
     parser = ArgumentParser(
-        description='Automatically jump to directory passed as an argument.',
+        description='Prints the directory passed as an argument.',
         epilog='Please see autojump(1) man pages for full documentation.',
     )
     parser.add_argument(
         'directory', metavar='DIRECTORY', nargs='*', default='',
-        help='directory to jump to',
+        help='prints directory that has been passed as an argument.',
     )
     parser.add_argument(
         '-a', '--add', metavar='DIRECTORY',
@@ -114,7 +114,7 @@ def parse_arguments():
     parser.add_argument(
         '-d', '--decrease', metavar='WEIGHT', nargs='?', type=int,
         const=15, default=False,
-        help='decrease current directory weight',
+        help='decrease current directory weight test',
     )
     parser.add_argument(
         '--complete', action='store_true', default=False,
