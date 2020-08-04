@@ -146,3 +146,7 @@ def test_get_path():
 
 def test_get_none():
     assert get_tab_entry_info('gibberish content', '__') == (None, None, None)
+
+
+def test_tab_delete():
+    assert 'foo' == 'bar'
