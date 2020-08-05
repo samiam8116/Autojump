@@ -64,6 +64,7 @@ from autojump_utils import print_tab_menu
 from autojump_utils import sanitize
 from autojump_utils import take
 from autojump_utils import unico
+from autojump_utils import encode_local
 
 VERSION = '22.5.3'
 FUZZY_MATCH_THRESHOLD = 0.6
@@ -198,14 +199,39 @@ def find_matches(entries, needles, check_entries=True):
         reverse=True,
     )
 
-    return ifilter(
-        lambda entry: not is_cwd(entry) and path_exists(entry),
-        chain(
-            match_consecutive(needles, data, ignore_case),
-            match_fuzzy(needles, data, ignore_case),
-            match_anywhere(needles, data, ignore_case),
-        ),
-    )
+    arg = encode_local((first(chain(
+        imap(attrgetter('path'), ifilter(
+            lambda entry: not is_cwd(entry) and path_exists(entry),
+            chain(
+                match_consecutive(needles, data, ignore_case),
+                match_fuzzy(needles, data, ignore_case),
+                match_anywhere(needles, data, ignore_case),
+            ),
+        )),
+        # always return a path to calling shell functions
+        ['.'],
+    ))))
+
+    current_dir = get_pwd()
+
+    if arg == current_dir:
+        return ifilter(
+            lambda entry: is_cwd(entry) and path_exists(entry),
+            chain(
+                match_consecutive(needles, data, ignore_case),
+                match_fuzzy(needles, data, ignore_case),
+                match_anywhere(needles, data, ignore_case),
+            ),
+        )
+    elif arg:
+        return ifilter(
+            lambda entry: not is_cwd(entry) and path_exists(entry),
+            chain(
+                match_consecutive(needles, data, ignore_case),
+                match_fuzzy(needles, data, ignore_case),
+                match_anywhere(needles, data, ignore_case),
+            ),
+        )
 
 
 def handle_tab_completion(needle, entries):
