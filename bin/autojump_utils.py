@@ -11,6 +11,7 @@ import sys
 import unicodedata
 from itertools import islice
 
+from numpy import unicode
 
 if sys.version_info[0] == 3:
     imap = map
@@ -83,7 +84,7 @@ def get_pwd():
 def has_uppercase(string):
     if is_python3():
         return any(ch.isupper() for ch in string)
-    return any(unicodedata.category(c) == 'Lu' for c in str(string))
+    return any(unicodedata.category(c) == 'Lu' for c in unicode(string))
 
 
 def in_bash():
@@ -172,7 +173,7 @@ def print_tab_menu(needle, tab_entries, separator):
 
 def sanitize(directories):
     # edge case to allow '/' as a valid path
-    def clean(x): unico(x) if x == os.sep else unico(x).rstrip(os.sep)
+    clean = lambda x: unico(x) if x == os.sep else unico(x).rstrip(os.sep)
     return list(imap(clean, directories))
 
 
@@ -207,6 +208,6 @@ def take(n, iterable):
 
 def unico(string):
     """Converts into Unicode string."""
-    if is_python2() and not isinstance(string, str):
-        return str(string, encoding='utf-8', errors='replace')
+    if is_python2() and not isinstance(string, unicode):
+        return unicode(string, encoding='utf-8', errors='replace')
     return string

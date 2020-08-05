@@ -38,7 +38,7 @@ def match_anywhere(needles, haystack, ignore_case=False):
     regex_needle = '.*' + '.*'.join(imap(re.escape, needles)) + '.*'
     regex_flags = re.IGNORECASE | re.UNICODE if ignore_case else re.UNICODE
 
-    def found(haystack): re.search(
+    found = lambda haystack: re.search(
         regex_needle,
         haystack.path,
         flags=regex_flags,
@@ -82,7 +82,7 @@ def match_consecutive(needles, haystack, ignore_case=False):
     regex_needle = regex_one_sep.join(imap(re.escape, needles)) + regex_no_sep_end
     regex_flags = re.IGNORECASE | re.UNICODE if ignore_case else re.UNICODE
 
-    def found(entry): re.search(
+    found = lambda entry: re.search(
         regex_needle,
         entry.path,
         flags=regex_flags,
@@ -115,21 +115,21 @@ def match_fuzzy(needles, haystack, ignore_case=False, threshold=0.6):
 
     This is a weak heuristic and used as a last resort to find matches.
     """
-    def end_dir(path): return last(os.path.split(path))
+    end_dir = lambda path: last(os.path.split(path))
     if ignore_case:
         needle = last(needles).lower()
 
-        def match_percent(entry): SequenceMatcher(
+        match_percent = lambda entry: SequenceMatcher(
             a=needle,
             b=end_dir(entry.path.lower()),
         ).ratio()
     else:
         needle = last(needles)
 
-        def match_percent(entry): SequenceMatcher(
+        match_percent = lambda entry: SequenceMatcher(
             a=needle,
             b=end_dir(entry.path),
         ).ratio()
 
-    def meets_threshold(entry): return match_percent(entry) >= threshold
+    meets_threshold = lambda entry: match_percent(entry) >= threshold
     return ifilter(meets_threshold, haystack)

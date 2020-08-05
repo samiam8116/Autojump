@@ -43,7 +43,7 @@ def dictify(entries):
 
 def entriefy(data):
     """Converts a dictionary into an iterator of entries."""
-    def convert(tup): Entry(*tup)
+    convert = lambda tup: Entry(*tup)
     if is_python3():
         return map(convert, data.items())
     return imap(convert, data.iteritems())
@@ -65,12 +65,12 @@ def load(config):
         return {}
 
     # example: u'10.0\t/home/user\n' -> ['10.0', u'/home/user']
-    def parse(line): return line.strip().split('\t')
+    parse = lambda line: line.strip().split('\t')
 
-    def correct_length(x): return len(x) == 2
+    correct_length = lambda x: len(x) == 2
 
     # example: ['10.0', u'/home/user'] -> (u'/home/user', 10.0)
-    def tupleize(x): return x[1], float(x[0])
+    tupleize = lambda x: (x[1], float(x[0]))
 
     try:
         with open(
